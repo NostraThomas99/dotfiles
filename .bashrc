@@ -72,25 +72,8 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -117,7 +100,7 @@ if ! shopt -oq posix; then
 fi
 
 # pnpm
-export PNPM_HOME="/home/thomasbrooks/.local/share/pnpm"
+export PNPM_HOME="/home/nostrathomas/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -131,4 +114,21 @@ export NVM_DIR="$HOME/.nvm"
 export DALAMUD_HOME="$HOME/.xlcore/dalamud/Hooks/dev"
 
 # Created by `pipx` on 2024-12-21 15:38:13
-export PATH="$PATH:/home/thomasbrooks/.local/bin"
+export PATH="$PATH:/home/nostrathomas/.local/bin"
+
+alias ll='ls -lh --color=auto'
+alias la='ls -lha --color=auto'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias grep='grep --color=auto'
+alias cls='clear'
+alias please='sudo'
+
+alias myip='curl ifconfig.me'
+
+alias top='htop'
+alias df='df -h'
+alias du='du -h --max-depth=1'
