@@ -1,0 +1,11 @@
+[Unit]
+Description=Run cider track display every 5 seconds
+Requires=cider-track.service
+
+[Timer]
+OnBootSec=5sec
+OnUnitActiveSec=5sec
+AccuracySec=1sec
+
+[Install]
+WantedBy=timers.target

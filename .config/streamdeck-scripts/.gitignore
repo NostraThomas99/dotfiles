@@ -1,0 +1,9 @@
+# Generated StreamDeck UI profiles - managed by generate_profile.py
+~/.cache/streamdeck-ui/profiles/
+/home/*/cache/streamdeck-ui/profiles/
+*.json
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo

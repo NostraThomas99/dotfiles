@@ -1,0 +1,159 @@
+# StreamDeck Scripts
+
+This directory contains scripts for controlling StreamDeck devices and generating profiles, managed via YADM for easy synchronization across hosts.
+
+## Files
+
+### Scripts
+- `generate_profile.py` - CLI helper for generating StreamDeck-UI profiles
+- `bandwidth.py` - Display network bandwidth information
+- `cider_track.py` - Display current track from Cider music player
+- `cider_control.sh` - Control Cider music player
+- `audio_switch.sh` - Switch between audio devices
+- `screenlock.sh` - Lock the screen
+- `system_monitor.py` - Display system monitoring information
+- `time_date.sh` - Display current time and date
+- `common.py` - Shared utility functions
+
+### Icons (Synced via YADM)
+- `net.png` - Network/bandwidth icon
+- `song.png` - Music/track icon
+
+### Systemd Services
+- `~/.config/systemd/user/bandwidth-monitor.service` - Bandwidth monitoring service
+- `~/.config/systemd/user/cider-track.service` - Cider track monitoring service
+- `~/.config/systemd/user/cider-track.timer` - Timer for cider track updates
+- `~/.config/systemd/user/system-monitor.service` - System monitoring service
+- `~/.config/systemd/user/system-monitor.timer` - Timer for system monitor updates
+- `~/.config/systemd/user/time-date.service` - Time/date display service
+
+## Usage
+
+### Generate StreamDeck Profile
+
+To generate a new StreamDeck-UI profile with all configured buttons:
+
+```bash
+./generate_profile.py
+```
+
+This script will:
+1. Read configuration from `~/.config/streamdeck-ui/streamdeck-ui.conf` (with fallback if absent)
+2. Generate a JSON profile at `~/.cache/streamdeck-ui/profiles/default.json`
+3. Attempt to restart the `streamdeck-ui` service via systemctl
+
+The generated JSON files are ignored by git as they are automatically generated.
+
+### Manual StreamDeck-UI Start
+
+If the service is not installed, you can start StreamDeck-UI manually:
+
+```bash
+streamdeck-ui --device 0
+```
+
+## YADM Integration & Setup
+
+This StreamDeck configuration is managed via YADM (Yet Another Dotfiles Manager) for easy synchronization across hosts.
+
+### Files Tracked by YADM
+- `~/.config/streamdeck-scripts/` - All scripts, icons, and configuration
+- `~/.config/systemd/user/*` - StreamDeck-related systemd services and timers
+- Generated profile JSON files are ignored via `.gitignore`
+
+### New Machine Setup
+
+#### 1. Install YADM and Bootstrap
+```bash
+# Clone your dotfiles repository
+yadm clone <your-repo-url>
+
+# Run bootstrap to set up the environment
+yadm bootstrap
+```
+
+#### 2. Enable SystemD Timers
+After bootstrapping, enable the StreamDeck-related timers:
+
+```bash
+# Enable and start bandwidth monitoring
+systemctl --user enable bandwidth-monitor.service
+systemctl --user start bandwidth-monitor.service
+
+# Enable and start system monitoring with timer
+systemctl --user enable system-monitor.timer
+systemctl --user start system-monitor.timer
+
+# Enable and start Cider track monitoring with timer
+systemctl --user enable cider-track.timer
+systemctl --user start cider-track.timer
+
+# Enable and start time/date service
+systemctl --user enable time-date.service
+systemctl --user start time-date.service
+
+# Check status of all services
+systemctl --user status bandwidth-monitor.service system-monitor.timer cider-track.timer time-date.service
+```
+
+#### 3. Generate Initial StreamDeck Profile
+```bash
+cd ~/.config/streamdeck-scripts
+./generate_profile.py
+```
+
+### Workflow: Updating Button Mappings
+
+Whenever you modify button mappings or add new scripts:
+
+1. **Update the configuration** (edit scripts, add new icons, etc.)
+2. **Regenerate the profile**:
+   ```bash
+   cd ~/.config/streamdeck-scripts
+   ./generate_profile.py
+   ```
+3. **Commit changes to YADM**:
+   ```bash
+   yadm add ~/.config/streamdeck-scripts
+   yadm commit -m "Update StreamDeck configuration"
+   yadm push
+   ```
+
+### Icon Management
+
+Icons (SVG/PNG files) are stored in the repository and sync across hosts:
+- `net.png` - Network bandwidth icon
+- `song.png` - Music track icon
+- Add new icons directly to `~/.config/streamdeck-scripts/` and commit them
+
+### Troubleshooting
+
+#### Service Status
+```bash
+# Check all StreamDeck services
+systemctl --user list-units '*streamdeck*' '*bandwidth*' '*cider*' '*system-monitor*' '*time-date*'
+
+# View service logs
+journalctl --user -u bandwidth-monitor.service -f
+journalctl --user -u system-monitor.timer -f
+```
+
+#### Profile Generation Issues
+```bash
+# Test profile generation manually
+cd ~/.config/streamdeck-scripts
+python3 generate_profile.py --verbose
+
+# Check StreamDeck-UI configuration
+ls -la ~/.config/streamdeck-ui/
+ls -la ~/.cache/streamdeck-ui/profiles/
+```
+
+#### StreamDeck-UI Service
+```bash
+# Restart StreamDeck-UI service
+sudo systemctl restart streamdeck-ui
+
+# Or start manually for testing
+streamdeck-ui --device 0
+```

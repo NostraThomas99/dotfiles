@@ -1,0 +1,14 @@
+[Unit]
+Description=Bandwidth Monitor for StreamDeck
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.config/streamdeck-scripts
+ExecStart=/usr/bin/python3 %h/.config/streamdeck-scripts/bandwidth.py
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run system monitor every 10 seconds
+Requires=system-monitor.service
+
+[Timer]
+OnBootSec=10sec
+OnUnitActiveSec=10sec
+AccuracySec=1sec
+
+[Install]
+WantedBy=timers.target
