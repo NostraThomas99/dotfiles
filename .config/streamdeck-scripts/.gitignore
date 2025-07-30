@@ -7,3 +7,9 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Generated images (created by scripts, not stored in repo)
+*.png
+*.jpg
+*.jpeg
+*.gif
