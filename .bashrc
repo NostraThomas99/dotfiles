@@ -6,7 +6,7 @@ export HISTSIZE=5000
 export HISTIGNORE="cd*:false:history:htop:ls*:ll*:la:l:popd:pushd*:reset:top:true"
 export HISTCONTROL="ignoreboth"
 export HISTTIMEFORMAT="%Y-%m-%d %T "
-export HISTFILE="~/.bash_history"
+export HISTFILE=~/.bash_history
 shopt -s histappend
 
 # Aliases
@@ -50,3 +50,4 @@ export VISUAL="nano"
 export PAGER="less"
 export DALAMUD_HOME="/home/nostrathomas/.xlcore/dalamud/Hooks/dev"
 export OLLAMA_HOST="normandy-sr2:11434"
+export OLLAMA_CONTEXT_LENGTH=64000
