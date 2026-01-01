@@ -1,5 +1,3 @@
-source /usr/share/cachyos-fish-config/cachyos-config.fish
-
 # overwrite greeting
 # potentially disabling fastfetch
 #function fish_greeting
@@ -34,3 +32,8 @@ if type -q colordiff
 end
 alias now='date +"%F-%T; %V week"'
 alias my_ip='curl -s ifconfig.co/json | python3 -m json.tool'
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /var/home/nostrathomas/.lmstudio/bin
+# End of LM Studio CLI section
+

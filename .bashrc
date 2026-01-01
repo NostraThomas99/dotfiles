@@ -49,5 +49,8 @@ export EDITOR="nano"
 export VISUAL="nano"
 export PAGER="less"
 export DALAMUD_HOME="/home/nostrathomas/.xlcore/dalamud/Hooks/dev"
-export OLLAMA_HOST="normandy-sr2:11434"
-export OLLAMA_CONTEXT_LENGTH=64000
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/var/home/nostrathomas/.lmstudio/bin"
+# End of LM Studio CLI section
+
